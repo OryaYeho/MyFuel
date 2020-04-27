@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 //import client.*; when we create the client class
-//Very Important Saleem
+//Very Important 
 
 public class ClientController{
 
