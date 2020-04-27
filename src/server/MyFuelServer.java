@@ -1,5 +1,7 @@
 package server;
 
+import java.io.IOException;
+
 import entity.Employee;
 import entity.Message;
 import ocsf.server.*;
@@ -24,7 +26,13 @@ public class MyFuelServer extends AbstractServer
 	 switch(message.getCmd()) {
 	  case(1)://get all the data of employees
 		  System.out.println("case 1");
-		  this.sendToAllClients(MysqlConnection.getAllEmployeeData());
+		  //this.sendToAllClients(MysqlConnection.getAllEmployeeData());
+	      try {
+			client.sendToClient(MysqlConnection.getAllEmployeeData());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		  break;
 	  case(2)://update employee job
 		  MysqlConnection.updateEmployeeJob((Employee)message.getObj());
