@@ -1,7 +1,14 @@
 package entity;
 
-public class Employee {
+import java.io.Serializable;
 
+public class Employee implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6056663232073769636L;
+	
 	private String firstName,lastName,mail,workerID;
 	private Jobs workerJob;
 	

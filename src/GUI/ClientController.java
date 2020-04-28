@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 //import client.*; when we create the client class
-//Very Important 
+//Very Important Saleem
 
 public class ClientController{
 
@@ -49,7 +49,7 @@ public class ClientController{
 	// Client stuff
 	private static int itemIndex = 3;
 
-	public ClientConsole ClientMyFuel;
+	public ClientConsole ClientMyFuel = new ClientConsole("localhost", 5555);
 
 	public void ChangeJob(CellEditEvent<Employee, Jobs> event) throws Exception {
        TablePosition<Employee, Jobs> pos = event.getTablePosition();
@@ -57,8 +57,7 @@ public class ClientController{
        Employee employee = event.getTableView().getItems().get(pos.getRow());
        employee.setWorkerJob(newJob);
             
-       //call the server for update job to newJob
-       ClientMyFuel.accept(new Message(employee,2).toString());
+       ClientMyFuel.accept(new Message(employee,2));
        
        System.out.println("the job is "+newJob);
 
@@ -72,11 +71,32 @@ public class ClientController{
 	
 	public void initialize() {
 
-		employeeIDCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("workerID"));
+		@SuppressWarnings("unchecked")
+		TableColumn<Employee, Integer> employeeIDCol= (TableColumn<Employee, Integer>)
+				employeeTable.getColumns().get(0);
+		employeeIDCol.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("workerID"));
+		
+		@SuppressWarnings("unchecked")
+		TableColumn<Employee, String> firstNameCol= (TableColumn<Employee, String>)
+				employeeTable.getColumns().get(1);
 		firstNameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
+		
+		@SuppressWarnings("unchecked")
+		TableColumn<Employee, String> lastNameCol= (TableColumn<Employee, String>)
+				employeeTable.getColumns().get(2);
 		lastNameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
+		
+		@SuppressWarnings("unchecked")
+		TableColumn<Employee, String> MailCol= (TableColumn<Employee, String>)
+				employeeTable.getColumns().get(3);
 		MailCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("mail"));
-
+		
+		//this is the part of COMBO BOX
+		
+		@SuppressWarnings("unchecked")
+		TableColumn<Employee, Jobs> jobCol = (TableColumn<Employee, Jobs>)
+				employeeTable.getColumns().get(4);
+		
 		ObservableList<Jobs> jobsList = FXCollections.observableArrayList(Jobs.values());
 
 		jobCol.setCellValueFactory(new Callback<CellDataFeatures<Employee, Jobs>, ObservableValue<Jobs>>() {
@@ -94,13 +114,9 @@ public class ClientController{
 	public void start(Stage primaryStage) throws Exception {
 		Pane mainPane;
 		Scene s;
-        String res="1getAllData";
-		//send to server
-		ClientMyFuel = new ClientConsole("localhost", 5555);
 		//ClientMyFuel.accept(new Message("getAllData",1).toString());
-		ClientMyFuel.accept(res);
+		ClientMyFuel.accept(new Message("getAllData",1));
 		
-		System.out.println("I had send the message THanks");
 		
 		// load the fxml file called 'ClientGUI' to mainPane
 		// because the main fram is Pane object
@@ -109,11 +125,20 @@ public class ClientController{
 		mainPane = loader.load();
 		//sfc = loader.getController();
 		
-		// connect the scene to the file
-		s = new Scene(mainPane);
+		
+		
+		employeeTable=(TableView<Employee>)mainPane.getChildren().get(0);
+		employeeTable.setEditable(true);
+		
+		
 		
 		initialize();
+		
 		this.loadEmployees(MyFuelClient.s1);
+		
+		
+		// connect the scene to the file
+		s = new Scene(mainPane);
 		
 		primaryStage.setTitle("MyFuel ltm");
 		primaryStage.setScene(s);

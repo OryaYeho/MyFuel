@@ -43,11 +43,8 @@ public class MysqlConnection {
 			stmt = conn.createStatement();
 			ResultSet rs=stmt.executeQuery("SELECT * FROM myfuelemployee");
 			while(rs.next()) {
-				if(!rs.isLast()) {
-					System.out.println(rs.getString(1));
 					result.add(new Employee(rs.getString(1),rs.getString(2),rs.getString(3),
 							rs.getString(4),Jobs.valueOf(rs.getString(5))));
-				}
 			}
 			
 		} catch (SQLException e) {

@@ -19,24 +19,31 @@ public class MyFuelServer extends AbstractServer
   
   public void handleMessageFromClient  (Object msg, ConnectionToClient client)
   {
-	 Message message=Message.stringToMessage(msg.toString());
+	 Message message=(Message)msg;
 	 
 	 System.out.println("Message received: cmd " + message.getCmd() +" the object "+message.getObj()+ " from " + client);
 	 
 	 switch(message.getCmd()) {
 	  case(1)://get all the data of employees
-		  System.out.println("case 1");
 		  //this.sendToAllClients(MysqlConnection.getAllEmployeeData());
 	      try {
-			client.sendToClient(MysqlConnection.getAllEmployeeData());
+			client.sendToClient(new Message(MysqlConnection.getAllEmployeeData(),1));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		  break;
 	  case(2)://update employee job
-		  MysqlConnection.updateEmployeeJob((Employee)message.getObj());
-	  System.out.println("case 2");
+	      Employee temp=(Employee)message.getObj();
+	      System.out.println(temp+"   handleMessageFromClient");
+		  MysqlConnection.updateEmployeeJob(temp);
+		  System.out.println("database updated");
+	      try {
+			client.sendToClient(new Message("updated the employee Job",0));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		  break;
 		  default:
 			  System.out.println("default");

@@ -26,9 +26,8 @@ public class ClientConsole implements MyFuelIF
   }
 
   
-  public void accept(String str) 
+  public void accept(Object str) 
   {
-	  display(str);
 	  client.handleMessageFromClientUI(str);
   }
   
