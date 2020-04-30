@@ -41,10 +41,10 @@ public class MysqlConnection {
 		ArrayList<Employee> result=new ArrayList<Employee>();
 		try {
 			stmt = conn.createStatement();
-			ResultSet rs=stmt.executeQuery("SELECT * FROM myfuelemployee");
+			ResultSet rs=stmt.executeQuery("SELECT * FROM employee");
 			while(rs.next()) {
 					result.add(new Employee(rs.getString(1),rs.getString(2),rs.getString(3),
-							rs.getString(4),Jobs.valueOf(rs.getString(5))));
+							rs.getString(4),Jobs.valueOf(rs.getString(5)),rs.getString(6)));
 			}
 			
 		} catch (SQLException e) {
@@ -56,7 +56,7 @@ public class MysqlConnection {
 	
 	public static void updateEmployeeJob(Employee emp) {
 		try {
-			PreparedStatement ps = conn.prepareStatement("Update myfuelemployee SET job=?"+
+			PreparedStatement ps = conn.prepareStatement("Update employee SET job=?"+
 		         "WHERE employeeID =?");
 			ps.setString(1, emp.getWorkerJob().toString());
 			ps.setString(2, emp.getWorkerID());

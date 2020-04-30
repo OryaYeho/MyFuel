@@ -29,7 +29,7 @@ import javafx.util.Callback;
 //Very Important Saleem
 
 public class ClientController{
-
+/*
 	@FXML
 	private TableColumn<Employee, String> employeeIDCol;
 	@FXML
@@ -40,6 +40,9 @@ public class ClientController{
 	private TableColumn<Employee, String> MailCol;
 	@FXML
 	private TableColumn<Employee, Jobs> jobCol;
+	@FXML
+	private TableColumn<Employee,String> AffiliationCol;
+*/
 	@FXML
 	private TableView<Employee> employeeTable;
 
@@ -70,11 +73,21 @@ public class ClientController{
 	
 	
 	public void initialize() {
-
+		/*
+		employeeIDCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("workerID"));
+		firstNameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("firstName"));
+		lastNameCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("lastName"));
+		MailCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("mail"));
+		AffiliationCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("organizationalAffiliation"));
+		
+		ObservableList<Jobs> jobsList = FXCollections.observableArrayList(Jobs.values());
+		jobCol.setCellFactory(ComboBoxTableCell.forTableColumn(jobsList));
+		*/
+		
 		@SuppressWarnings("unchecked")
-		TableColumn<Employee, Integer> employeeIDCol= (TableColumn<Employee, Integer>)
-				employeeTable.getColumns().get(0);
-		employeeIDCol.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("workerID"));
+		TableColumn<Employee, String> employeeIDCol= (TableColumn<Employee, String>)
+		        employeeTable.getColumns().get(0);
+		employeeIDCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("workerID"));
 		
 		@SuppressWarnings("unchecked")
 		TableColumn<Employee, String> firstNameCol= (TableColumn<Employee, String>)
@@ -98,7 +111,13 @@ public class ClientController{
 				employeeTable.getColumns().get(4);
 		
 		ObservableList<Jobs> jobsList = FXCollections.observableArrayList(Jobs.values());
-
+		jobCol.setCellFactory(ComboBoxTableCell.forTableColumn(jobsList));
+				
+		@SuppressWarnings("unchecked")
+		TableColumn<Employee, String> organizationalAffiliationCol = (TableColumn<Employee, String>)
+				employeeTable.getColumns().get(5);
+		organizationalAffiliationCol.setCellValueFactory(new PropertyValueFactory<Employee, String>("organizationalAffiliation"));
+		
 		jobCol.setCellValueFactory(new Callback<CellDataFeatures<Employee, Jobs>, ObservableValue<Jobs>>() {
 			@Override
 			public SimpleObjectProperty<Jobs> call(CellDataFeatures<Employee, Jobs> param) {
@@ -107,7 +126,7 @@ public class ClientController{
 			}
 		});
 
-		jobCol.setCellFactory(ComboBoxTableCell.forTableColumn(jobsList));
+		
 
 	}
 
@@ -126,24 +145,21 @@ public class ClientController{
 		//sfc = loader.getController();
 		
 		
-		
 		employeeTable=(TableView<Employee>)mainPane.getChildren().get(0);
 		employeeTable.setEditable(true);
 		
-		
-		
 		initialize();
-		
 		this.loadEmployees(MyFuelClient.s1);
 		
 		
 		// connect the scene to the file
-		s = new Scene(mainPane);
-		
+	    s = new Scene(mainPane);
+	    
 		primaryStage.setTitle("MyFuel ltm");
 		primaryStage.setScene(s);
 		primaryStage.show();
 
 	}
+
 
 }
