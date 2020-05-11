@@ -1,13 +1,25 @@
 package server;
 
-public class ServerUI {
-	final public static String DEFAULT_PORT = "5555";
+import GUI.ServerController;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
+public class ServerUI extends Application{
 
+	private static MyFuelServer sv;
+	
 	public static void main(String args[]) throws Exception {
-		runServer(DEFAULT_PORT);
+		launch(args);
 	}
 
+	@Override
+	public void start(Stage primaryStage) throws Exception {			  		
+		ServerController aFrame = new ServerController(); 
+		// create StudentFrame
+		aFrame.start(primaryStage);
+		
+	}
+	
 	public static void runServer(String p) {
 		int port = 0; // Port to listen on
 
@@ -18,13 +30,20 @@ public class ServerUI {
 			System.out.println("ERROR - Could not connect!");
 		}
 
-		MyFuelServer sv = new MyFuelServer(port);
-		
+		sv = new MyFuelServer(port);
 		
 		try {
 			sv.listen(); // Start listening for connections
 		} catch (Exception ex) {
 			System.out.println("ERROR - Could not listen for clients!");
+		}
+	}
+	
+	public static void stopServer() {
+		try {
+			sv.close(); // Start listening for connections
+		} catch (Exception ex) {
+			System.out.println("ERROR - Could not close the server!");
 		}
 	}
 
