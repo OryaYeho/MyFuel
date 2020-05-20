@@ -12,19 +12,7 @@ public class ClientConsole implements MyFuelIF
    MyFuelClient client;
 
   
-  public ClientConsole(String host, int port) 
-  {
-    try 
-    {
-      client= new MyFuelClient(host, port, this);
-    } 
-    catch(IOException exception) 
-    {
-      System.out.println("Error: Can't setup connection!"+ " Terminating client.");
-      System.exit(1);
-    }
-  }
-
+  
   
   public void accept(Object str) 
   {

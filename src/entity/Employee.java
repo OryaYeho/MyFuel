@@ -4,11 +4,14 @@ import java.io.Serializable;
 
 public class Employee implements Serializable{
 
-	/**
+
+/**
 	 * 
 	 */
-	private static final long serialVersionUID = -6056663232073769636L;
+	private static final long serialVersionUID = 4251817789084934265L;
+
 	
+
 	private String firstName,lastName,mail,workerID,organizationalAffiliation;
 	private Jobs workerJob;
 	
